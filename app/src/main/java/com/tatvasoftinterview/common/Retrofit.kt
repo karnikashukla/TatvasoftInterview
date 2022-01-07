@@ -3,16 +3,15 @@ package com.tatvasoftinterview.common
 import retrofit2.create
 
 class Retrofit private constructor() {
-    var userItemAPI: Retrofit
-        get() {
-            return if (field != null)
-                field
-            else
-                INSTANCE
-        }
+    var userItemAPI: Webservice
 
     companion object {
-        var INSTANCE = Retrofit()
+        var INSTANCE: Retrofit? = null
+            get() {
+                if (field == null)
+                    field = Retrofit()
+                return field
+            }
     }
 
     init {

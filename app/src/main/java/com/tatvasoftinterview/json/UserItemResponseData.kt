@@ -11,5 +11,4 @@ data class UserItemResponseData(
 
     @SerializedName("data")
     val data: UsersParams
-
 )
