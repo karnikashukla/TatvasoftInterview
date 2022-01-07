@@ -25,6 +25,7 @@ class UserItemsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val myHolder = holder as MyViewHolder
+
         if (context != null) {
             Glide.with(context!!).load(userItemsList[position]).into(myHolder.itemImageView)
         }

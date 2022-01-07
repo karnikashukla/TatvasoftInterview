@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.tatvasoftinterview.R
@@ -33,16 +34,38 @@ class UserAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
         myViewHolder.userNameTextView.text = userList[position].userName
 
+        var spanCount = arrayListOf<Boolean>()
+
         userItemsAdapter.context = context
         if (!userList.isEmpty()) {
             for (i in userList.indices) {
                 if (userList[i].userItemsArray.isNotEmpty()) {
-                    for (j in userList[i].userItemsArray.indices)
+                    for (j in userList[i].userItemsArray.indices) {
                         userItemList.add(userList[i].userItemsArray[j])
+                        if (j % 2 == 0)
+                            spanCount.add(true)
+                        else
+                            spanCount.add(true)
+                    }
                 }
             }
         }
         userItemsAdapter.userItemsList = userItemList
+
+        if (position % 2 == 0) {
+            myViewHolder.userItemRecyclerView.layoutManager = GridLayoutManager(context, 2)
+        } else {
+            var c = 0
+            for (i in spanCount.indices) {
+                if (c % 2 != 0) {
+                    myViewHolder.userItemRecyclerView.layoutManager = GridLayoutManager(context, 1)
+                } else {
+                    myViewHolder.userItemRecyclerView.layoutManager = GridLayoutManager(context, 2)
+                }
+                c += 3
+            }
+        }
+
 
         myViewHolder.userItemRecyclerView.adapter = userItemsAdapter
         userItemsAdapter.notifyDataSetChanged()
