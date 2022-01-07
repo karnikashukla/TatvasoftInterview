@@ -1,0 +1,3 @@
+package com.tatvasoftinterview.json
+
+class UserItemResponse
