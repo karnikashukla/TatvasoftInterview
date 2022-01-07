@@ -1,0 +1,56 @@
+package com.tatvasoftinterview.adapter
+
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.tatvasoftinterview.R
+import com.tatvasoftinterview.model.UserItem
+
+class UserAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    var context: Context? = null
+    var userList = arrayListOf<UserItem>()
+    private var userItemsAdapter = UserItemsAdapter()
+    private var userItemList = arrayListOf<String>()
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        lateinit var myViewHolder: RecyclerView.ViewHolder
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.user_layout, parent, false)
+
+        myViewHolder = UserViewHolder(view)
+
+        return myViewHolder
+
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        var myViewHolder = holder as UserViewHolder
+        Glide.with(context!!).load(userList[position].userImagePath).into(myViewHolder.profileImage)
+
+        myViewHolder.userNameTextView.text = userList[position].userName
+
+        userItemsAdapter.context = context
+        for (i in userList.indices) {
+            userItemList.addAll(userList[i].userItemsArray)
+        }
+
+        userItemsAdapter.userItemsList = userItemList
+
+        myViewHolder.userItemRecyclerView.adapter = userItemsAdapter
+        userItemsAdapter.notifyDataSetChanged()
+    }
+
+    override fun getItemCount(): Int {
+        return userList.size
+    }
+
+    inner class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var profileImage: ImageView = itemView.findViewById(R.id.user_profile_image)
+        var userNameTextView: TextView = itemView.findViewById(R.id.user_name)
+        var userItemRecyclerView: RecyclerView = itemView.findViewById(R.id.user_items_list)
+    }
+}
