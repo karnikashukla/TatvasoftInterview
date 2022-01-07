@@ -26,16 +26,16 @@ class MainActivity : AppCompatActivity() {
                 for (i in it.data.userItemParams.indices) {
                     userList.add(it.data.userItemParams[i])
                 }
+                userAdapter.userList = userList
+                userListRecyclerView.adapter = userAdapter
+                userAdapter.notifyDataSetChanged()
             }
         })
         userItemViewModel.fetchUserItems()
 
-        userListRecyclerView.adapter = userAdapter
-        userAdapter.notifyDataSetChanged()
-
     }
 
     private fun initializeViews() {
-        userListRecyclerView = findViewById(R.id.user_items_list)
+        userListRecyclerView = findViewById(R.id.user_list)
     }
 }

@@ -28,16 +28,20 @@ class UserAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        var myViewHolder = holder as UserViewHolder
+        val myViewHolder = holder as UserViewHolder
         Glide.with(context!!).load(userList[position].userImagePath).into(myViewHolder.profileImage)
 
         myViewHolder.userNameTextView.text = userList[position].userName
 
         userItemsAdapter.context = context
-        for (i in userList.indices) {
-            userItemList.addAll(userList[i].userItemsArray)
+        if (!userList.isEmpty()) {
+            for (i in userList.indices) {
+                if (userList[i].userItemsArray.isNotEmpty()) {
+                    for (j in userList[i].userItemsArray.indices)
+                        userItemList.add(userList[i].userItemsArray[j])
+                }
+            }
         }
-
         userItemsAdapter.userItemsList = userItemList
 
         myViewHolder.userItemRecyclerView.adapter = userItemsAdapter
