@@ -15,9 +15,9 @@ class UserItemViewModel : ViewModel() {
         return userItemListLiveData
     }
 
-    fun fetchUserItems() {
+    fun fetchUserItems(page: Int) {
         viewModelScope.launch {
-            userItemListLiveData.postValue(userItemRepository.fetchUserData())
+            userItemListLiveData.postValue(userItemRepository.fetchUserData(page))
         }
     }
 }

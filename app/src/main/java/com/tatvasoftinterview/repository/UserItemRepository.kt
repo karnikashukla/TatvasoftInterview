@@ -6,5 +6,5 @@ import com.tatvasoftinterview.common.Webservice
 class UserItemRepository {
     private val client: Webservice? = Retrofit.INSTANCE?.userItemAPI
 
-    suspend fun fetchUserData() = client?.getUserItems()
+    suspend fun fetchUserData(page: Int) = client?.getUserItems(page, 10)
 }
